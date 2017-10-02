@@ -100,6 +100,28 @@ public class DisassemblyManager {
         System.out.println("com.sfc.sf2.background.io.DisassemblyManager.exportDisassembly() - Disassembly exported.");        
     }    
     
+    public static Background importSingleBackground(String filepath){
+        System.out.println("com.sfc.sf2.background.io.DisassemblyManager.importDisassembly() - Importing disassembly ...");
+        Background background = new Background();
+        try{
+            Tile[] tiles = parseGraphics(filepath);
+            if(tiles!=null){
+                if(tiles.length==BACKGROUND_TILE_LENGTH){
+                   background.setIndex(0);                   
+                   background.setTiles(tiles);
+                   System.out.println("Created Background with " + tiles.length + " tiles.");                       
+                }else{
+                    System.out.println("Could not create Background because of wrong length : tiles=" + tiles.length);
+                }
+            }
+        }catch(Exception e){
+             System.err.println("com.sfc.sf2.background.io.PngManager.importPng() - Error while parsing graphics data : "+e);
+        }         
+                
+        System.out.println("com.sfc.sf2.background.io.DisassemblyManager.importDisassembly() - Disassembly imported.");
+        return background;
+    }
+    
     private static Tile[] parseGraphics(String filePath){
         Tile[] tiles = null;
         Color[] palette = null;

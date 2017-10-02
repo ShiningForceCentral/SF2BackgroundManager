@@ -42,6 +42,15 @@ public class BackgroundManager {
         System.out.println("com.sfc.sf2.background.BackgroundManager.importDisassembly() - Disassembly imported.");
     }
     
+    public void importSingleDisassembly(String filepath){
+        System.out.println("com.sfc.sf2.background.BackgroundManager.importDisassembly() - Importing disassembly ...");
+        backgrounds = new Background[1];
+        backgrounds[0] = DisassemblyManager.importSingleBackground(filepath);
+        tiles = backgrounds[0].getTiles();
+        graphicsManager.setTiles(tiles);
+        System.out.println("com.sfc.sf2.background.BackgroundManager.importDisassembly() - Disassembly imported.");
+    }
+    
     public void exportDisassembly(String basepath){
         System.out.println("com.sfc.sf2.background.BackgroundManager.importDisassembly() - Exporting disassembly ...");
         DisassemblyManager.exportDisassembly(backgrounds, basepath);
