@@ -9,6 +9,7 @@ import com.sfc.sf2.graphics.GraphicsManager;
 import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.background.io.DisassemblyManager;
 import com.sfc.sf2.background.io.PngManager;
+import com.sfc.sf2.background.io.GifManager;
 import com.sfc.sf2.palette.PaletteManager;
 import java.awt.Color;
 
@@ -85,5 +86,22 @@ public class BackgroundManager {
         System.out.println("com.sfc.sf2.background.BackgroundManager.exportPng() - Exporting PNG ...");
         PngManager.exportPng(backgrounds, basepath);
         System.out.println("com.sfc.sf2.background.BackgroundManager.exportPng() - PNG exported.");       
+    }
+    
+    public void importGif(String basepath){
+        System.out.println("com.sfc.sf2.background.BackgroundManager.importGif() - Importing GIF ...");
+        backgrounds = GifManager.importGif(basepath);
+        tiles = new Tile[backgrounds.length*384];
+        for(int i=0;i<backgrounds.length;i++){
+            System.arraycopy(backgrounds[i].getTiles(), 0, tiles, i*384, 384);
+        }
+        graphicsManager.setTiles(tiles);
+        System.out.println("com.sfc.sf2.background.BackgroundManager.importGif() - GIF imported.");
+    }
+    
+    public void exportGif(String basepath){
+        System.out.println("com.sfc.sf2.background.BackgroundManager.exportGif() - Exporting GIF ...");
+        GifManager.exportGif(backgrounds, basepath);
+        System.out.println("com.sfc.sf2.background.BackgroundManager.exportGif() - GIF exported.");       
     }
 }
