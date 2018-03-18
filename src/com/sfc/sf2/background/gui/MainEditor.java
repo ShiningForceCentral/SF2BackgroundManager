@@ -210,7 +210,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel2.setText("<html>Select a directory with \"backgroundXX.bin\" files.<br/>Typical disassembly path : data/graphics/battles/backgrounds/</html>");
 
-        jTextField9.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\graphics\\battles\\backgrounds\\");
+        jTextField9.setText(".\\");
             jTextField9.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jTextField9ActionPerformed(evt);
