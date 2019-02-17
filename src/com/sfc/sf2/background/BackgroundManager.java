@@ -22,14 +22,6 @@ public class BackgroundManager {
     private GraphicsManager graphicsManager = new GraphicsManager();
     private Tile[] tiles;
     private Background[] backgrounds;
-
-    public Tile[] getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(Tile[] tiles) {
-        this.tiles = tiles;
-    }
        
     public void importDisassembly(String graphicsBasepath){
         System.out.println("com.sfc.sf2.background.BackgroundManager.importDisassembly() - Importing disassembly ...");
@@ -85,5 +77,21 @@ public class BackgroundManager {
         System.out.println("com.sfc.sf2.background.BackgroundManager.exportPng() - Exporting PNG ...");
         PngManager.exportPng(backgrounds, basepath);
         System.out.println("com.sfc.sf2.background.BackgroundManager.exportPng() - PNG exported.");       
+    }
+
+    public Tile[] getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(Tile[] tiles) {
+        this.tiles = tiles;
+    }
+
+    public Background[] getBackgrounds() {
+        return backgrounds;
+    }
+
+    public void setBackgrounds(Background[] backgrounds) {
+        this.backgrounds = backgrounds;
     }
 }

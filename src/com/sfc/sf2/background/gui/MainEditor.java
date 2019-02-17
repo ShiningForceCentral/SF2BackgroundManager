@@ -198,7 +198,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel2.setText("<html>Select a directory with \"backgroundXX.bin\" files.<br/>Typical disassembly path : data/graphics/battles/backgrounds/</html>");
 
-        jTextField9.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\graphics\\battles\\backgrounds\\");
+        jTextField9.setText(".\\");
             jTextField9.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jTextField9ActionPerformed(evt);
@@ -272,7 +272,7 @@ public class MainEditor extends javax.swing.JFrame {
                     }
                 });
 
-                jLabel3.setText("<html>Select a directory with \"backgroundXX.png\" files.<br>Required PNG Format : 4BPP / 16 indexed colors.<br>Transparent color at index 0.</html>");
+                jLabel3.setText("<html>Select a directory with \"backgroundXX.png\" files.<br>Required PNG Format : 4BPP / 16 indexed colors.</html>");
 
                 javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
                 jPanel9.setLayout(jPanel9Layout);
@@ -334,7 +334,7 @@ public class MainEditor extends javax.swing.JFrame {
                     }
                 });
 
-                jLabel1.setText("<html>Select a directory to create new \"backgroundXX.bin\" files.<br>Exported PNG Format : 4BPP / 16 indexed colors.<br>Transparent color at index 0.</html>");
+                jLabel1.setText("<html>Select a directory to create new \"backgroundXX.bin\" files.</html>");
 
                 jLabel14.setText("Directory :");
 
@@ -382,7 +382,7 @@ public class MainEditor extends javax.swing.JFrame {
                             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton2)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(31, Short.MAX_VALUE))
+                            .addContainerGap(54, Short.MAX_VALUE))
                     );
 
                     jTabbedPane2.addTab("Disassembly", jPanel11);
@@ -410,7 +410,7 @@ public class MainEditor extends javax.swing.JFrame {
                             }
                         });
 
-                        jLabel9.setText("<html>Select a directory to create new \"backgroundXX.png\" files.<br>Exported PNG Format : 4BPP / 16 indexed colors.<br>Transparent color at index 0.</html>");
+                        jLabel9.setText("<html>Select a directory to create new \"backgroundXX.png\" files.<br>Exported PNG Format : 4BPP / 16 indexed colors.</html>");
 
                         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
                         jPanel14.setLayout(jPanel14Layout);
