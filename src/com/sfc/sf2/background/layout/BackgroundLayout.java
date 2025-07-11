@@ -72,7 +72,7 @@ public class BackgroundLayout extends JPanel {
                     for(int blockLine=0;blockLine<3;blockLine++){
                         for(int tileColumn=0;tileColumn<4;tileColumn++){
                             for(int tileLine=0;tileLine<4;tileLine++){
-                                graphics.drawImage(tiles[(backgroundIndex*12*32)+(screenHalf*16*12)+(blockColumn*12*4)+(blockLine*4*4)+(tileColumn*4)+tileLine].getImage(), (screenHalf*16+blockColumn*4+tileColumn)*8, (backgroundIndex*12+blockLine*4+tileLine)*8, null);
+                                graphics.drawImage(tiles[(backgroundIndex*12*32)+(screenHalf*16*12)+(blockColumn*12*4)+(blockLine*4*4)+(tileColumn*4)+tileLine].getIndexedColorImage(), (screenHalf*16+blockColumn*4+tileColumn)*8, (backgroundIndex*12+blockLine*4+tileLine)*8, null);
                             }
                         }
                     }
