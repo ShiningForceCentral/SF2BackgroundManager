@@ -5,121 +5,134 @@
  */
 package com.sfc.sf2.background.layout;
 
+import com.sfc.sf2.background.Background;
 import com.sfc.sf2.graphics.Tile;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.IndexColorModel;
 import javax.swing.JPanel;
 
 /**
  *
- * @author wiz
+ * @author TiMMy
  */
 public class BackgroundLayout extends JPanel {
     
-    private static final int DEFAULT_TILES_PER_ROW = 32;
+    private static final int BACKGROUND_HEIGHT = 12;
+    private static final int TILES_PER_ROW = 32;
     
-    private int tilesPerRow = DEFAULT_TILES_PER_ROW;
-    private Tile[] tiles;
+    private Background[] backgrounds;
+    
+    private BufferedImage currentImage;
+    private boolean redraw = true;
+    
+    private int displaySize = 1;
+    private boolean showGrid = true;
     
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);   
+        super.paintComponent(g);
         g.drawImage(buildImage(), 0, 0, this);       
     }
     
-    public BufferedImage buildImage(){
-        BufferedImage image = buildImage(this.tiles,this.tilesPerRow, false);
-        setSize(image.getWidth(), image.getHeight());
-        return image;
-    }
-    
-    public static BufferedImage buildImage(Tile[] tiles, int tilesPerRow, boolean pngExport){
-        int imageHeight = (tiles.length/tilesPerRow)*8;
-        if(tiles.length%tilesPerRow!=0){
-            imageHeight+=8;
-        }
-        BufferedImage image;
-        if(pngExport){
-            IndexColorModel icm = buildIndexColorModel(tiles[0].getPalette());
-            image = new BufferedImage(tilesPerRow*8, imageHeight , BufferedImage.TYPE_BYTE_BINARY, icm);
-        } else{
-            image = new BufferedImage(tilesPerRow*8, imageHeight , BufferedImage.TYPE_INT_RGB);
-        }
-        Graphics graphics = image.getGraphics();
-        for(int backgroundIndex=0;backgroundIndex<(tiles.length/(12*32));backgroundIndex++){         
-            /*
-                1  5  9 13 49 53                  193 197
-                2  6 10 14 50  .                  194   .
-                3  7 11 15 51  .                  195   .
-                4  8 12 16 52  .                  196   .
-               17 21 25 29  
-               18 22 26 30
-               19 23 27 31
-               20 24 28 32
-               33 37 41 45                  . 189                    . 381
-               34 38 42 46                  . 190                    . 382
-               35 39 43 47                  . 191                    . 383
-               36 40 44 48                188 192                  380 384
-            */
-            
-            /* Loop on backgrounds, then 2 screen halves, then 4 block columns, then 3 block lines, then 4 tile columns, then 4 tile lines */
-            
-            for(int screenHalf=0;screenHalf<2;screenHalf++){
-                for(int blockColumn=0;blockColumn<4;blockColumn++){
-                    for(int blockLine=0;blockLine<3;blockLine++){
-                        for(int tileColumn=0;tileColumn<4;tileColumn++){
-                            for(int tileLine=0;tileLine<4;tileLine++){
-                                graphics.drawImage(tiles[(backgroundIndex*12*32)+(screenHalf*16*12)+(blockColumn*12*4)+(blockLine*4*4)+(tileColumn*4)+tileLine].getIndexedColorImage(), (screenHalf*16+blockColumn*4+tileColumn)*8, (backgroundIndex*12+blockLine*4+tileLine)*8, null);
-                            }
-                        }
-                    }
-                }
+    public BufferedImage buildImage() {
+        if (redraw) {
+            if (backgrounds == null || backgrounds.length == 0) {
+                currentImage = null;
+            } else {
+                currentImage = buildImage(backgrounds);
+                currentImage = resize(currentImage);
+                setSize(currentImage.getWidth(), currentImage.getHeight());
+                if (showGrid) { drawGrid(currentImage); }
             }
         }
+        return currentImage;
+    }
+    
+    public static BufferedImage buildImage(Background[] backgrounds) {
+        int count = backgrounds.length;
+        int imageWidth = TILES_PER_ROW*8;
+        int imageHeight = count*BACKGROUND_HEIGHT*8;
+        BufferedImage image;
+        image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = image.getGraphics();
+        for(int b = 0; b < count; b++) {
+            Tile[] tiles = backgrounds[b].getTiles();
+            for(int t = 0; t < tiles.length; t++) {
+                int x = (t%TILES_PER_ROW)*8;
+                int y = (b*BACKGROUND_HEIGHT + t/TILES_PER_ROW)*8;
+                graphics.drawImage(tiles[t].getIndexedColorImage(), x, y, null);
+            }
+        }
+        graphics.dispose();
         return image;
     }
     
-    private static IndexColorModel buildIndexColorModel(Color[] colors){
-        byte[] reds = new byte[16];
-        byte[] greens = new byte[16];
-        byte[] blues = new byte[16];
-        byte[] alphas = new byte[16];
-        reds[0] = (byte)0xFF;
-        greens[0] = (byte)0xFF;
-        blues[0] = (byte)0xFF;
-        alphas[0] = 0;
-        for(int i=0;i<16;i++){
-            reds[i] = (byte)colors[i].getRed();
-            greens[i] = (byte)colors[i].getGreen();
-            blues[i] = (byte)colors[i].getBlue();
-            alphas[i] = (byte)0xFF;
+    private void drawGrid(BufferedImage image) {
+        int height = BACKGROUND_HEIGHT*8;
+        Graphics2D graphics = (Graphics2D)image.getGraphics();
+        graphics.setColor(Color.BLACK);
+        graphics.setStroke(new BasicStroke(1));
+        int x = 0;
+        int y = 0;
+        while (x < image.getWidth()) {
+            graphics.drawLine(x, 0, x, image.getHeight());
+            x += 8*displaySize;
         }
-        IndexColorModel icm = new IndexColorModel(4,16,reds,greens,blues,alphas);
-        return icm;
-    }     
+        graphics.drawLine(x-1, 0, x-1, image.getHeight());
+        while (y < image.getHeight()) {
+            graphics.setStroke(new BasicStroke((y % (height*displaySize) == 0) ? 3 : 1));
+            graphics.drawLine(0, y, image.getWidth(), y);
+            y += 8*displaySize;
+        }
+        graphics.setStroke(new BasicStroke(3));
+        graphics.drawLine(0, y-1, image.getWidth(), y-1);
+        graphics.dispose();
+    }
+    
+    public void resize(int size){
+        this.displaySize = size;
+        currentImage = resize(currentImage);
+    }
+    
+    private BufferedImage resize(BufferedImage image) {
+        if (displaySize == 1)
+            return image;
+        BufferedImage newImage = new BufferedImage(image.getWidth()*displaySize, image.getHeight()*displaySize, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = newImage.getGraphics();
+        g.drawImage(image, 0, 0, image.getWidth()*displaySize, image.getHeight()*displaySize, null);
+        g.dispose();
+        return newImage;
+    }
     
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(getWidth(), getHeight());
     }
     
-        public Tile[] getTiles() {
-        return tiles;
+    public Background[] getBackgrounds() {
+        return backgrounds;
     }
 
-    public void setTiles(Tile[] tiles) {
-        this.tiles = tiles;
-    }
-    
-    public int getTilesPerRow() {
-        return tilesPerRow;
+    public void setBackgrounds(Background[] backgrounds) {
+        this.backgrounds = backgrounds;
+        redraw = true;
     }
 
-    public void setTilesPerRow(int tilesPerRow) {
-        this.tilesPerRow = tilesPerRow;
+    public int getDisplaySize() {
+        return displaySize;
     }
-    
+
+    public void setDisplaySize(int displaySize) {
+        this.displaySize = displaySize;
+        redraw = true;
+    }
+
+    public void setShowGrid(boolean showGrid) {
+        this.showGrid = showGrid;
+        redraw = true;
+    }
 }

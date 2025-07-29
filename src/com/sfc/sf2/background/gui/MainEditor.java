@@ -7,11 +7,8 @@ package com.sfc.sf2.background.gui;
 
 import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.background.BackgroundManager;
-import com.sfc.sf2.graphics.layout.DefaultLayout;
 import com.sfc.sf2.background.layout.BackgroundLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.io.File;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
@@ -20,14 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
-import javax.swing.JViewport;
-import javax.swing.RowFilter;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -36,6 +25,7 @@ import javax.swing.table.TableRowSorter;
 public class MainEditor extends javax.swing.JFrame {
     
     BackgroundManager backgroundManager = new BackgroundManager();
+    BackgroundLayout backgroundLayout;
     
     /**
      * Creates new form NewApplication
@@ -51,6 +41,11 @@ public class MainEditor extends javax.swing.JFrame {
             System.setProperty("user.dir", workingDirectory.toString());
             jFileChooser1.setCurrentDirectory(workingDirectory);       
             jFileChooser2.setCurrentDirectory(workingDirectory);
+            
+            jPanel2.removeAll();
+            jPanel2.setLayout(new GridLayout(1,1));
+            backgroundLayout = new BackgroundLayout();
+            jPanel2.add(backgroundLayout);
         } catch (URISyntaxException ex) {
             Logger.getLogger(MainEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,9 +79,12 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel10 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
+        jComboBox6 = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        jCheckBox6 = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -164,7 +162,7 @@ public class MainEditor extends javax.swing.JFrame {
         jSplitPane2.setDividerLocation(500);
         jSplitPane2.setOneTouchExpandable(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tiles"));
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Backgrounds :"));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -179,26 +177,65 @@ public class MainEditor extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jPanel2);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x1", "x2", "x3", "x4" }));
+        jComboBox6.setSelectedIndex(1);
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setText("Scale :");
+
+        jCheckBox6.setSelected(true);
+        jCheckBox6.setText("Show grid");
+        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addComponent(jCheckBox6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 68, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18)
+                    .addComponent(jCheckBox6))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jSplitPane2.setRightComponent(jPanel10);
@@ -216,11 +253,6 @@ public class MainEditor extends javax.swing.JFrame {
         jLabel2.setText("<html>Select a directory with \"backgroundXX.bin\" files.<br/>Typical disassembly path : data/graphics/battles/backgrounds/</html>");
 
         jTextField9.setText(".\\");
-            jTextField9.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jTextField9ActionPerformed(evt);
-                }
-            });
 
             jLabel10.setText("Directory :");
 
@@ -269,11 +301,6 @@ public class MainEditor extends javax.swing.JFrame {
             jLabel11.setText("PNG Files :");
 
             jTextField11.setText(".\\");
-                jTextField11.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        jTextField11ActionPerformed(evt);
-                    }
-                });
 
                 jButton17.setText("File...");
                 jButton17.addActionListener(new java.awt.event.ActionListener() {
@@ -330,11 +357,6 @@ public class MainEditor extends javax.swing.JFrame {
                 jLabel12.setText("GIF Files :");
 
                 jTextField12.setText(".\\");
-                    jTextField12.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            jTextField12ActionPerformed(evt);
-                        }
-                    });
 
                     jButton19.setText("File...");
                     jButton19.addActionListener(new java.awt.event.ActionListener() {
@@ -399,7 +421,7 @@ public class MainEditor extends javax.swing.JFrame {
                     );
                     jPanel3Layout.setVerticalGroup(
                         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane1)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                     );
 
                     jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -417,11 +439,6 @@ public class MainEditor extends javax.swing.JFrame {
                     jLabel14.setText("Directory :");
 
                     jTextField13.setText(".\\");
-                        jTextField13.addActionListener(new java.awt.event.ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                jTextField13ActionPerformed(evt);
-                            }
-                        });
 
                         jButton20.setText("File...");
                         jButton20.addActionListener(new java.awt.event.ActionListener() {
@@ -468,11 +485,6 @@ public class MainEditor extends javax.swing.JFrame {
                         jLabel15.setText("PNG Files :");
 
                         jTextField15.setText(".\\");
-                            jTextField15.addActionListener(new java.awt.event.ActionListener() {
-                                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                    jTextField15ActionPerformed(evt);
-                                }
-                            });
 
                             jButton27.setText("File...");
                             jButton27.addActionListener(new java.awt.event.ActionListener() {
@@ -528,11 +540,6 @@ public class MainEditor extends javax.swing.JFrame {
                             jLabel16.setText("GIF Files :");
 
                             jTextField16.setText(".\\");
-                                jTextField16.addActionListener(new java.awt.event.ActionListener() {
-                                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                        jTextField16ActionPerformed(evt);
-                                    }
-                                });
 
                                 jButton28.setText("File...");
                                 jButton28.addActionListener(new java.awt.event.ActionListener() {
@@ -596,15 +603,15 @@ public class MainEditor extends javax.swing.JFrame {
                                 );
                                 jPanel5Layout.setVerticalGroup(
                                     jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTabbedPane2)
+                                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                                 );
 
                                 javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
                                 jPanel8.setLayout(jPanel8Layout);
                                 jPanel8Layout.setHorizontalGroup(
                                     jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                                 );
                                 jPanel8Layout.setVerticalGroup(
                                     jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -625,7 +632,7 @@ public class MainEditor extends javax.swing.JFrame {
                                 );
                                 jPanel15Layout.setVerticalGroup(
                                     jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, Short.MAX_VALUE)
+                                    .addComponent(jSplitPane2)
                                 );
 
                                 jSplitPane1.setLeftComponent(jPanel15);
@@ -660,10 +667,6 @@ public class MainEditor extends javax.swing.JFrame {
         backgroundManager.exportDisassembly(jTextField13.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
-
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         int returnVal = jFileChooser2.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -678,15 +681,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         backgroundManager.importPng(jTextField11.getText());
-        jPanel2.removeAll();
-        Tile[] tiles = backgroundManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BackgroundLayout backgroundLayout = new BackgroundLayout();
-        backgroundLayout.setTiles(tiles);
-        jPanel2.add(backgroundLayout);
-        jPanel2.setSize(backgroundLayout.getWidth(), backgroundLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();  
+        updateInterface();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -697,26 +692,10 @@ public class MainEditor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton17ActionPerformed
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         backgroundManager.importDisassembly(jTextField9.getText());
-        jPanel2.removeAll();
-        Tile[] tiles = backgroundManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BackgroundLayout backgroundLayout = new BackgroundLayout();
-        backgroundLayout.setTiles(tiles);
-        jPanel2.add(backgroundLayout);
-        jPanel2.setSize(backgroundLayout.getWidth(), backgroundLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();      
+        updateInterface();   
     }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         int returnVal = jFileChooser2.showOpenDialog(this);
@@ -726,10 +705,6 @@ public class MainEditor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton15ActionPerformed
 
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
-
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         int returnVal = jFileChooser2.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -737,10 +712,6 @@ public class MainEditor extends javax.swing.JFrame {
             jTextField13.setText(file.getAbsolutePath()+System.getProperty("file.separator"));
         }
     }//GEN-LAST:event_jButton20ActionPerformed
-
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         int returnVal = jFileChooser2.showOpenDialog(this);
@@ -752,20 +723,8 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         backgroundManager.importGif(jTextField12.getText());
-        jPanel2.removeAll();
-        Tile[] tiles = backgroundManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BackgroundLayout backgroundLayout = new BackgroundLayout();
-        backgroundLayout.setTiles(tiles);
-        jPanel2.add(backgroundLayout);
-        jPanel2.setSize(backgroundLayout.getWidth(), backgroundLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();  
+        updateInterface();
     }//GEN-LAST:event_jButton14ActionPerformed
-
-    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField16ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         int returnVal = jFileChooser2.showOpenDialog(this);
@@ -779,6 +738,29 @@ public class MainEditor extends javax.swing.JFrame {
         backgroundManager.exportGif(jTextField16.getText());
     }//GEN-LAST:event_jButton16ActionPerformed
 
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        backgroundLayout.setDisplaySize(jComboBox6.getSelectedIndex()+1);
+        repaintLayout();
+    }//GEN-LAST:event_jComboBox6ActionPerformed
+
+    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
+        backgroundLayout.setShowGrid(jCheckBox6.isSelected());
+        repaintLayout();
+    }//GEN-LAST:event_jCheckBox6ActionPerformed
+
+    private void updateInterface() {
+        backgroundLayout.setBackgrounds(backgroundManager.getBackgrounds());
+        backgroundLayout.setShowGrid(jCheckBox6.isSelected());
+        backgroundLayout.setDisplaySize(jComboBox6.getSelectedIndex()+1);
+        repaintLayout();
+    }
+    
+    private void repaintLayout() {
+        jPanel2.setSize(backgroundLayout.getWidth(), backgroundLayout.getHeight());
+        jPanel2.revalidate();
+        jPanel2.repaint();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -833,6 +815,16 @@ public class MainEditor extends javax.swing.JFrame {
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
@@ -843,18 +835,27 @@ public class MainEditor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
