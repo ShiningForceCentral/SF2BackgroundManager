@@ -246,7 +246,6 @@
                                     <StringItem index="3" value="x4"/>
                                   </StringArray>
                                 </Property>
-                                <Property name="selectedIndex" type="int" value="1"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox6ActionPerformed"/>
@@ -262,7 +261,6 @@
                             </Component>
                             <Component class="javax.swing.JCheckBox" name="jCheckBox6">
                               <Properties>
-                                <Property name="selected" type="boolean" value="true"/>
                                 <Property name="text" type="java.lang.String" value="Show grid"/>
                               </Properties>
                               <Events>
